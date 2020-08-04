@@ -3,7 +3,6 @@ package ru.sevenseven.cafeteria.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -21,9 +20,12 @@ public class User {
     @Column
     private String name;
 
+    @Column
+    private String login;
 
-    //??? ManyToMany or OneToMany or ManyToOne ??? может быть несколько ролей или только одна роль?
-    // (Админ, клиент, модератор и т.п.)
+    @Column
+    private String password;
+
     @ManyToOne(fetch = FetchType.LAZY,
             cascade = {CascadeType.MERGE})
     @JoinTable(
@@ -32,9 +34,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Role role;
 
+
     @Override
     public String toString(){
-        return id + " " + surname + " " + name + " role: " + role;
+        return id + " " + login + " " + surname + " " + name + " role: " + role;
     }
 
     @Override
@@ -42,13 +45,17 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id.equals(user.id) && surname.equals(user.surname) && name.equals(user.name) && role.equals(user.role);
+        return id.equals(user.id)
+                && surname.equals(user.surname)
+                && name.equals(user.name)
+                && login.equals(user.login)
+                && password.equals(user.password)
+                && role.equals(user.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, surname, name, role);
+        return Objects.hash(id, surname, name, login, password, role);
     }
-
 
 }
