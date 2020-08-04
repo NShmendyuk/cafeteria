@@ -6,9 +6,9 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "product")
+@Table(name = "role")
 @Data
-public class Product {
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,27 +17,22 @@ public class Product {
     @Column
     private String name;
 
-    @Column
-    private Long price;
-
-    @Column
-    private Long quantity; // сколько осталось товара
-
     @Override
     public String toString(){
-        return name + " price: " + price.toString() + " quantity:" + quantity.toString();
+        return id.toString() + " " + name;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return id.equals(product.id) && name.equals(product.name) && price.equals(product.price);
+        Role role = (Role) o;
+        return id.equals(role.id) && name.equals(role.name);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
     }
+
 }
