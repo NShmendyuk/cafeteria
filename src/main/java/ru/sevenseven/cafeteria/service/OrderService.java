@@ -1,6 +1,5 @@
 package ru.sevenseven.cafeteria.service;
 
-import ru.sevenseven.cafeteria.dto.OrderDto;
 import ru.sevenseven.cafeteria.model.Order;
 import ru.sevenseven.cafeteria.model.Product;
 import ru.sevenseven.cafeteria.repository.OrderRepository;

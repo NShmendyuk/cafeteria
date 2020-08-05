@@ -1,4 +1,18 @@
 package ru.sevenseven.cafeteria.service;
 
-public class UserService {
+import ru.sevenseven.cafeteria.model.User;
+import ru.sevenseven.cafeteria.repository.UserRepository;
+
+import java.util.List;
+
+public class UserService implements IUserService {
+    UserRepository userRepository;
+    public UserService(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
+    }
 }
