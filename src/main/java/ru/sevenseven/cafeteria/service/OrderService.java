@@ -15,23 +15,13 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public void add(Order order){
-        orderRepository.save(order);
+    public Order add(Order order){
+        return orderRepository.save(order);
     }
 
     @Override
-    public Order addProduct(Order order, Product product){
-        orderRepository.addProductToOrder(order, product);
-    }
-
-    @Override
-    public Order addProductsArray(Order order, Product[] products){
-        return orderRepository.addProductsToOrder(order, products);
-    }
-
-    @Override
-    public List<Product> getAllProductsByOrder(Order order){
-        return order.getProducts();
+    public List<Product> getAllProductsByOrder(Long id){
+        return orderRepository.findAllProductsByOrder(id);
     }
 
     @Override

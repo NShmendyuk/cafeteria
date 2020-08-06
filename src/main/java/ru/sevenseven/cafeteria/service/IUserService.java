@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface IUserService {
     List<User> getAllUsers();
+    User add(User user);
     //User currentUser();
 }
