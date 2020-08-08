@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 @Data
 public class Order {
 
@@ -23,17 +23,15 @@ public class Order {
     @Column
     private Timestamp time;
 
-    // https://www.baeldung.com/hibernate-date-time какой-нибудь entity чтобы видеть
-    // когда был принят заказ и/или к какому времени
     @Column
     private Timestamp timeOn;
 
-    @OneToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
-            name = "order_product",
-            joinColumns = @JoinColumn(name = "orderId", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "productId", referencedColumnName = "id"))
+            name = "order_products",
+            joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
     private Collection<Product> products;
 
 
@@ -62,7 +60,7 @@ public class Order {
     @Override
     public int hashCode() {
         return Objects.hash(id, clientId,
-//                time, timeOn,
+                time, timeOn,
                 products);
     }
 

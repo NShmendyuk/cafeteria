@@ -1,12 +1,13 @@
 package ru.sevenseven.cafeteria.model;
 
+
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "product")
+@Table(name = "products")
 @Data
 public class Product {
 
@@ -40,4 +41,6 @@ public class Product {
     public int hashCode() {
         return Objects.hash(id, name);
     }
+
+
 }
