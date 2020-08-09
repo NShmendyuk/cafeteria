@@ -22,11 +22,16 @@ public class Product {
     private Long price;
 
     @Column
-    private Long quantity; // сколько осталось товара
+    private Boolean available; // is product in stock? +/-
+
+    public Product(){
+        super();
+        available = true;
+    }
 
     @Override
     public String toString(){
-        return name + " price: " + price.toString() + " quantity:" + quantity.toString();
+        return name + " price: " + price.toString() + " available: " + available.toString();
     }
 
     @Override
@@ -34,12 +39,12 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return id.equals(product.id) && name.equals(product.name) && price.equals(product.price);
+        return id.equals(product.id) && name.equals(product.name) && price.equals(product.price) && available.equals(product.available);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, name, available);
     }
 
 

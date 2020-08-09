@@ -21,4 +21,14 @@ public class ProductService implements IProductService {
     public List<Product> getAllProducts(){
         return productRepository.findAll();
     }
+
+    @Override
+    public Product setAvailableById(Boolean available, Long id){
+        return productRepository.save(productRepository.findById(id).setAvailable(available));
+    }
+
+    @Override
+    public Product setAvailableByName(Boolean available, String name){
+        return productRepository.save(productRepository.findByName(name).setAvailable(available));
+    }
 }
