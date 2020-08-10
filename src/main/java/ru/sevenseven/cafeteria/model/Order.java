@@ -2,10 +2,9 @@ package ru.sevenseven.cafeteria.model;
 
 
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -19,13 +18,10 @@ public class Order {
     private Long id;
 
     @Column
-    private Long clientId;
+    private LocalDateTime time;
 
     @Column
-    private Timestamp time;
-
-    @Column
-    private Timestamp timeOn;
+    private LocalDateTime timeOn;
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -35,15 +31,22 @@ public class Order {
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
     private Collection<Product> products;
 
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = {/**CascadeType.PERSIST,**/ CascadeType.MERGE})
+    @JoinTable(
+            name = "order_user",
+            joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private User client;
+
 
     @Override
     public String toString(){
         return "(order id: " + id.toString()
-                + "; clientId: " + clientId.toString()
+                + "; clientId: " + client.toString()
                 + ") ordered at: " + time.toString()
-                + "; on: " + timeOn
-                + "\n"
-                + products.toString();
+                + "; on: " + timeOn + "\n"
+                + "products:(" + products.toString() + ")";
     }
 
     @Override
@@ -52,7 +55,7 @@ public class Order {
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
         return id.equals(order.id) &&
-                clientId.equals(order.clientId) &&
+                client.equals(order.client) &&
                 time.equals(order.time) &&
                 timeOn.equals(order.timeOn) &&
                 products.equals(order.products);
@@ -60,9 +63,7 @@ public class Order {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, clientId,
-                time, timeOn,
-                products);
+        return Objects.hash(id, client, time, timeOn, products);
     }
 
 }
