@@ -3,9 +3,9 @@ package ru.sevenseven.cafeteria.dto;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 public class OrderDto implements Serializable {
-    private Timestamp timeon;
+    private LocalDateTime timeOn;
 }
