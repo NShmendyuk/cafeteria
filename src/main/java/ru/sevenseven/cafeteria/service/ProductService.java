@@ -1,5 +1,6 @@
 package ru.sevenseven.cafeteria.service;
 
+import ru.sevenseven.cafeteria.dto.ProductDto;
 import ru.sevenseven.cafeteria.model.Product;
 import ru.sevenseven.cafeteria.repository.ProductRepository;
 
@@ -13,8 +14,11 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product add(Product product){
-        return productRepository.save(product);
+    public Product add(ProductDto productDto){
+        Product productCreated = new Product();
+        productCreated.setName(productDto.getName());
+        productCreated.setPrice(productDto.getPrice());
+        return productRepository.save(productCreated);
     }
 
     @Override

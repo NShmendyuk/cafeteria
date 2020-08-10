@@ -1,5 +1,6 @@
 package ru.sevenseven.cafeteria.service;
 
+import ru.sevenseven.cafeteria.dto.UserDto;
 import ru.sevenseven.cafeteria.model.User;
 import ru.sevenseven.cafeteria.repository.UserRepository;
 
@@ -11,8 +12,15 @@ public class UserService implements IUserService {
         this.userRepository = userRepository;
     }
 
+
+    //TODO: spring security for user, roles
     @Override
-    public User add(User user){
+    public User add(UserDto userDto){
+        User user = new User();
+        user.setSurname(userDto.getSurname());
+        user.setName(userDto.getName());
+        user.setLogin(userDto.getLogin());
+        user.setPassword("123"); //TODO: security
         return userRepository.save(user);
     }
 
